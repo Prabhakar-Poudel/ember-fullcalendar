@@ -65,9 +65,9 @@ export default Ember.Component.extend(InvokeActionMixin, {
     // selection
     'selectable', 'selectHelper', 'unselectAuto', 'unselectCancel', 'selectOverlap', 'selectConstraint', 'selectAllow',
     'selectMinDistance', 'selectLongPressDelay',
-
+    
     // event data
-    'events', 'eventSources', 'allDayDefault', 'startParam', 'endParam', 'timezoneParam', 'lazyFetching',
+    'events', 'eventSources', 'eventSources', 'allDayDefault', 'startParam', 'endParam', 'timezoneParam', 'lazyFetching',
     'defaultTimedEventDuration', 'defaultAllDayEventDuration', 'forceEventDuration',
 
     // event rendering

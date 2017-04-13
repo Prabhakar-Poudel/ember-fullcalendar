@@ -21,7 +21,7 @@ export default Ember.Component.extend(InvokeActionMixin, {
   schedulerLicenseKey: computed(function() {
 
     // load the consuming app's config
-    const applicationConfig = getOwner(this)._lookupFactory('config:environment');
+    const applicationConfig = getOwner(this).resolveRegistration('config:environment');
     const defaultSchedulerLicenseKey = 'CC-Attribution-NonCommercial-NoDerivatives';
 
     if (applicationConfig &&
@@ -36,8 +36,8 @@ export default Ember.Component.extend(InvokeActionMixin, {
   fullCalendarOptions: [
     // general display
     'header', 'footer', 'customButtons', 'buttonIcons', 'theme', 'themeButtonIcons', 'firstDay', 'isRTL', 'weekends', 'hiddenDays',
-    'fixedWeekCount', 'weekNumbers', 'weekNumberCalculation', 'weekNumbersWithinDays', 'businessHours', 'showNonCurrentDates', 'height', 'contentHeight', 'aspectRatio',
-    'handleWindowResize', 'eventLimit',
+    'fixedWeekCount', 'weekNumbers', 'weekNumberCalculation', 'businessHours', 'height', 'contentHeight', 'aspectRatio',
+    'handleWindowResize', 'eventLimit', 'weekNumbersWithinDays', 'showNonCurrentDates',
 
     // clicking & hovering
     'navLinks',
@@ -63,8 +63,9 @@ export default Ember.Component.extend(InvokeActionMixin, {
     'dayNamesShort', 'weekNumberTitle', 'displayEventTime', 'displayEventEnd', 'eventLimitText', 'dayPopoverFormat',
 
     // selection
-    'selectable', 'selectHelper', 'unselectAuto', 'unselectCancel', 'selectOverlap', 'selectConstraint', 'selectAllow', 'selectMinDistance', 'selectLongPressDelay',
-
+    'selectable', 'selectHelper', 'unselectAuto', 'unselectCancel', 'selectOverlap', 'selectConstraint', 'selectAllow',
+    'selectMinDistance', 'selectLongPressDelay',
+    
     // event data
     'events', 'eventSources', 'eventSources', 'allDayDefault', 'startParam', 'endParam', 'timezoneParam', 'lazyFetching',
     'defaultTimedEventDuration', 'defaultAllDayEventDuration', 'forceEventDuration',
@@ -124,7 +125,7 @@ export default Ember.Component.extend(InvokeActionMixin, {
   // SETUP/TEARDOWN
   /////////////////////////////////////
 
-  didInsertElement() {
+  didReceiveAttrs() {
 
     const options =
       assign(
@@ -251,11 +252,12 @@ export default Ember.Component.extend(InvokeActionMixin, {
    */
   viewNameDidChange: Ember.observer('viewName', function() {
     const viewName = this.get('viewName');
-    this.$().fullCalendar('changeView', viewName);
+    const viewRange = this.get('viewRange');
+    this.$().fullCalendar('changeView', viewName, viewRange);
 
     // Call action if it exists
     if (this.get('onViewChange')) {
-      this.get('onViewChange')(viewName);
+      this.get('onViewChange')(viewName, viewRange);
     }
   }),
 

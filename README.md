@@ -66,6 +66,8 @@ Where possible, this addon takes advantage of DDAU (Data Down, Actions Up) to al
 
 - `viewName` _(replaces `defaultView`)_ - allows you to change the view mode from outside of the component. For example, when using `header=false`, you can use your own buttons to modify the `viewName` property to change the view of the calendar.
 
+- `viewRange` - can be used in conjunction with `viewName` to simultaneously navigate to a new date when switching to a new view. [See the docs](https://fullcalendar.io/docs/views/changeView/).
+
 - `onViewChange` - pass an action to be notified when the view changes. This is different than the `viewRender` callback provided by FullCalendar as it is only triggered when the view changes and is not when any of the date navigation methods are called.
 
 - `date` _(replaces `defaultDate`)_ - allows you to change the date from outside of the component.
@@ -114,16 +116,19 @@ export default Ember.Controller.extend({
 
 ## FullCalendar Scheduler
 
-### Opting out
-By default, the FullCalendar Scheduler addon is imported. To opt out, add the following to your application's `ember-cli-build.js`:
+### Opting In
+By default, FullCalendar Scheduler is NOT imported. To include it, add the following to your application's `ember-cli-build.js`:
 ```javascript
   var app = new EmberApp(defaults, {
     emberFullCalendar: {
-      scheduler: false
+      includeScheduler: true
     }
     // Other options here, as needed.
   });
 ```
+
+## Fastboot Support
+This addon now has minimal Fastboot support via #46.
 
 ### License
 By default, the addon uses the [Free Trial License Key](http://fullcalendar.io/scheduler/download/) provided by FullCalendar. If you have a paid license key, you may set it by explicitly passing it into the component as `schedulerLicenseKey` or, the better option, is to set it in your `config/environment.js` file like so:
